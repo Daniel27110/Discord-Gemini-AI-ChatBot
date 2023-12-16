@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
-from threading import Thread
+import discord_api.commands
 import os
 
 # loads the .env file and token
@@ -16,9 +16,11 @@ tree = app_commands.CommandTree(client)
 def connect():
     # loads the token from the .env file
     token = os.getenv("DISCORD_TOKEN")
-
-    # runs the client
-    client.run(token)
+    # runs the client if the token is not None
+    if token is not None:
+        client.run(token)
+    else:
+        print("No Discord token found in .env file.")
 
 
 @client.event
@@ -30,16 +32,24 @@ async def on_ready():
     await change_status(client)
 
     # loads the bot's application commands
-    await load_commands()
+    load_commands()
+
+    # syncs the bot's application commands
+    await sync_commands()
 
 
-async def change_status(client):
+async def change_status(client: discord.Client):
     # loads the bot's status from the .env file
     status = os.getenv("DISCORD_STATUS")
 
-    activity = discord.Activity(type=discord.ActivityType.listening, name=status)
+    activity = discord.Activity(type=discord.ActivityType.watching, name=status)
     await client.change_presence(activity=activity)
 
 
-async def load_commands():
-    import discord_api.commands
+def load_commands():
+    discord_api.commands.load(tree)
+
+
+async def sync_commands():
+    await tree.sync()
+    print("Synced application commands.")
