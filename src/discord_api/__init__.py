@@ -1,7 +1,7 @@
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
-import discord_api.commands
+import commands
 import os
 
 # loads the .env file and token
@@ -47,7 +47,7 @@ async def change_status(client: discord.Client):
 
 
 def load_commands():
-    discord_api.commands.load(tree)
+    commands.load(tree)
 
 
 async def sync_commands():

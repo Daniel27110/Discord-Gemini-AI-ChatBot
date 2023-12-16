@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from threading import Thread
 from waitress import serve
 
