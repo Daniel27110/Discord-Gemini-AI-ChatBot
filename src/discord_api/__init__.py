@@ -13,6 +13,7 @@ client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
 
+# creates the discord bot using the token from the .env file
 def connect():
     # loads the token from the .env file
     token = os.getenv("DISCORD_TOKEN")
@@ -32,7 +33,7 @@ async def on_ready():
     await change_status(client)
 
     # loads the bot's application commands
-    load_commands()
+    await load_commands()
 
     # syncs the bot's application commands
     await sync_commands()
@@ -42,11 +43,15 @@ async def change_status(client: discord.Client):
     # loads the bot's status from the .env file
     status = os.getenv("DISCORD_STATUS")
 
-    activity = discord.Activity(type=discord.ActivityType.watching, name=status)
-    await client.change_presence(activity=activity)
+    # changes the bot's status
+    if status is not None:
+        activity = discord.Activity(type=discord.ActivityType.watching, name=status)
+        await client.change_presence(activity=activity)
+    else:
+        print("No Discord status found in .env file.")
 
 
-def load_commands():
+async def load_commands():
     commands.load(tree)
 
 

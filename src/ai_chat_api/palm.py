@@ -6,14 +6,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configure the API.
-key = os.environ["GOOGLE_API_KEY"]
+key = os.getenv("GOOGLE_API_KEY")
 
 # Create the model.
-genai.configure(api_key=key)
-model = genai.GenerativeModel("gemini-pro")
+if key is not None:
+    genai.configure(api_key=key)
+    model = genai.GenerativeModel("gemini-pro")
+else:
+    print("No Google API key found in .env file.")
 
 
 # Ask a question to the model.
 def ask(question):
-    response = model.generate_content(question)
-    return response.text
+    # checks if the model is not None
+    if model is not None:
+        response = model.generate_content(question)
+        return response.text
+    else:
+        return "No AI model found, please try again later."
