@@ -43,3 +43,9 @@ Define all your enviromental variables in the '**src/.env**' file and run the di
 (Discord-Chatbot) $ python src/main.py
 ```
 
+Alternatively, run the discord bot using pipenv directly:
+
+```bash
+$ pipenv run python src/main.py
+```
+
