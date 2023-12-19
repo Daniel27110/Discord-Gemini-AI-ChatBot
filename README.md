@@ -2,7 +2,7 @@
 
 A Discord bot capable of AI Chatting using the Google Gemini API.
 
-This project can be used as a standalone bot or be used as a template for constructing more elaborate bots.
+This project can be used as a standalone bot or be used as a template for constructing more elaborate discord bots.
 
 
 ### Commands: 
