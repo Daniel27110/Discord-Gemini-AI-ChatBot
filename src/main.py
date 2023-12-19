@@ -1,5 +1,6 @@
-import server
 import discord_api
+import server
+
 
 # Create the server.
 server.create()

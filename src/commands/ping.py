@@ -1,6 +1,3 @@
-from discord import app_commands
-
-
 def load(tree):
     @tree.command(name="ping", description="Pings the bot.")
     async def ping(interaction):

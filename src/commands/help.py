@@ -1,4 +1,3 @@
-from discord import app_commands
 from dotenv import load_dotenv
 import os
 
@@ -7,6 +6,9 @@ load_dotenv()
 
 # gets the help message from the .env file
 helpMessage = os.getenv("HELP_MESSAGE")
+if helpMessage is None:
+    print("HELP_MESSAGE not found in .env file")
+    helpMessage = "Something went wrong, please try again."
 
 
 # loads the help command
