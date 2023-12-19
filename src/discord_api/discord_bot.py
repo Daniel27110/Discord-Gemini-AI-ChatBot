@@ -54,6 +54,6 @@ async def on_message(message):
     # show the bot is typing
     async with message.channel.typing():
         # get the response from the AI
-        response: str = commands.chat(message)
+        response: str = commands.ai_chat(message)
     # send the response to the chat
     await message.channel.send(response)

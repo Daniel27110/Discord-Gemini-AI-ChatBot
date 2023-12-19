@@ -1,5 +1,6 @@
 import commands.help
 import commands.ping
+import commands.chat
 import commands.ask
 
 
@@ -11,10 +12,10 @@ def load(tree):
 
 
 # chat with the model
-def chat(message):
-    return commands.ask.chat(message)
+def ai_chat(message):
+    return commands.chat.ai_chat(message)
 
 
 # setup ai chat api
 def setup_ai_chat():
-    commands.ask.setup_ai_chat()
+    commands.chat.setup_ai_chat()

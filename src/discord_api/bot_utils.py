@@ -5,9 +5,6 @@ import os
 
 # setup bot status and commands
 async def on_ready(client, tree):
-    # prints a message to the console
-    print("Discord bot is running!")
-
     # changes the bot's status
     await change_status(client)
 
