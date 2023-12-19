@@ -1,6 +1,7 @@
-from flask import Flask
 from threading import Thread
 from waitress import serve
+from flask import Flask
+
 
 # creates the server
 app = Flask("Discord Bot")

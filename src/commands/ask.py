@@ -1,7 +1,7 @@
-from discord import app_commands
-from dotenv import load_dotenv
 from errors import getErrorMessages
+from discord import app_commands
 import ai_chat_api.palm as palm
+from dotenv import load_dotenv
 import random
 import os
 
