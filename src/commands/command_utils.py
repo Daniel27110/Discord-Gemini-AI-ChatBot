@@ -27,8 +27,14 @@ def format_message(interaction, message: str):
 
 # cleans the message from the bot's response
 def clean_response(response: str) -> str:
-    # Remove possible introductions in the form "bot_name: "
-    response = response.replace(f"{bot_name}: ", "")
+    # Removes all text in bold
+    response = response.replace("*", "")
+
+    # Remove possible introductions in the form "bot_name:"
+    response = response.replace(f"{bot_name}:", "")
+
+    # removes any possible extra spaces at the beginning or end of the message
+    response = response.strip()
 
     # if the message has over 2000 characters, it will be cut
     # and the last 3 characters will be replaced with "..."
