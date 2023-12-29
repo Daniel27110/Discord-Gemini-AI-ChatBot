@@ -37,7 +37,7 @@ $ pipenv shell
 $ pipenv install
 ```
 
-Define all your enviromental variables in the '**src/.env**' file and run the discord bot:
+Define all your enviromental variables in the '**src/.env**' file as shown in '**src/.env_sample**', then run the discord bot:
 
 ```bash
 (Discord-Chatbot) $ python src/main.py
