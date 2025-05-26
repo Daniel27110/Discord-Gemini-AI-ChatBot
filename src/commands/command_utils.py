@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import emoji
 import os
 
 
@@ -49,14 +50,12 @@ def clean_response(response):
 
     # Remove possible introductions of the form "bot_name:"
     response = response.replace(f"{bot_name}:", "")
+    response = response.replace(f"[{bot_name}]:", "")
 
     # removes any possible extra spaces
     response = response.strip()
 
-    # removes all emojis
-    response = "".join(c for c in response if c.isprintable() and not c.isspace())
-
-    # truncates the response if it is too long
-    response = response[:2000]
+    # removes all emojis from the response
+    response = emoji.replace_emoji(response, replace="")
 
     return response
