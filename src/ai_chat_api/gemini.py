@@ -1,58 +1,75 @@
-import google.generativeai as genai
+import google.generativeai as gemini
 from dotenv import load_dotenv
 import os
+
 
 # Load the API key from the .env file.
 load_dotenv()
 
+
 # Configure the API.
-key: str | None = os.getenv("GOOGLE_API_KEY")
+key = os.getenv("GOOGLE_API_KEY")
+
+# checks if the key is None
+if key is None:
+    raise ValueError("GOOGLE_API_KEY not found in .env file.")
+
+# Initialize the model and chat log
 model = None
 chat_log = None
 
 
-# Ask a single question to the model.
+# ask a question to the model.
 def ask(question):
-    # checks if the model is not None
-    if model is not None:
-        response = model.generate_content(question)
-        return response.text
-    else:
-        return "No AI model found, please try again later."
+
+    # check if the model is None
+    if model is None:
+        raise ValueError("AI model is not initialized")
+
+    # generate a response from the model
+    response = model.generate_content(question)
+    return response.text
 
 
-# chat with the model
+# send a new question to the chat log.
 def chat(question):
-    # checks if the model and chat are not None
-    if model is not None and chat_log is not None:
-        response = chat_log.send_message(question)
-        return response.text
-    else:
-        return "No AI model found, please try again later."
+
+    # check if the model is None
+    if model is None:
+        raise ValueError("AI model is not initialized")
+
+    # check if the chat log is None
+    if chat_log is None:
+        raise ValueError("Chat log is not initialized")
+
+    # generate a response from the chat log
+    response = chat_log.send_message(question)
+    return response.text
 
 
 # setup ai chat api
-def setup_ai_chat(personality_prompt: str):
+def setup_ai_chat(personality_prompt):
+
     global model
     global chat_log
-    # Create the model.
-    if key is not None:
-        genai.configure(api_key=key)
-        model = genai.GenerativeModel("gemini-pro")
-        print("AI model loaded successfully.")
-    else:
-        print("No Google API key found in .env file.")
 
-    # generate the long term chat
-    if model is not None:
-        chat_log = model.start_chat(history=[])
-        setup_history(personality_prompt)
-        print("Bot is ready to chat.")
-    else:
-        print("No AI model was found.")
+    # configure the gemini API with the key
+    gemini.configure(api_key=key)
+    model = gemini.GenerativeModel("gemini-2.0-flash")
+    print("AI model loaded successfully.")
+
+    # check if the model is loaded
+    if model is None:
+        raise ValueError("AI model could not be loaded")
+
+    # start a chat with the model using the personality prompt
+    chat_log = model.start_chat(history=[])
+    setup_history(personality_prompt)
+    print("Bot is ready to chat.")
 
 
 # starts the chat history using the personality prompt
-def setup_history(personality_prompt: str):
-    # uses the chat function to start the chat history
+def setup_history(personality_prompt):
+
+    # sends the personality prompt as the first message in the chat log
     chat(personality_prompt)

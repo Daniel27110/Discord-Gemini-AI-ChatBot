@@ -1,44 +1,62 @@
 from dotenv import load_dotenv
 import os
 
+
 # loads the .env file and token
 load_dotenv()
 
 # import the bot name
-bot_name: str | None = os.getenv("BOT_NAME")
+bot_name = os.getenv("BOT_NAME")
+
+# checks if the bot name is None
 if bot_name is None:
-    print("No bot name found in .env file.")
+    raise ValueError("BOT_NAME not found in .env file.")
 
 # import the personality prompt
-personality_prompt: str | None = os.getenv("PERSONALITY_PROMPT")
+personality_prompt = os.getenv("PERSONALITY_PROMPT")
+
+# checks if the personality prompt is None
 if personality_prompt is None:
-    print("No personality prompt found in .env file.")
+    raise ValueError("PERSONALITY_PROMPT not found in .env file.")
 
 
-# creates the chat message in the apropiate format
-def format_message(interaction, message: str):
+# formats the user question to be sent to the AI model
+def format_user_question(interaction, message):
+
     # format = "Hi I'm {username}, {personality_prompt} \n {message}"
-    username: str = interaction.user.nick or interaction.user.name
-    introduction: str = f"Hi I'm {username}, {personality_prompt}"
-    formated_message: str = f"{introduction} \n {message}"
+    username = interaction.user.nick or interaction.user.name
+    introduction = f"Hi I'm {username}, {personality_prompt}"
+    formatted_message = f"{introduction} \n {message}"
 
-    return formated_message
+    return formatted_message
+
+
+# formats the user message to be sent to the AI model
+def format_user_message(message):
+
+    # format = "{username}: {message}"
+    username = message.author.display_name or message.author.name
+    formatted_message = f"{username}: {message.content}"
+
+    return formatted_message
 
 
 # cleans the message from the bot's response
-def clean_response(response: str) -> str:
+def clean_response(response):
+
     # Removes all text in bold
     response = response.replace("*", "")
 
-    # Remove possible introductions in the form "bot_name:"
+    # Remove possible introductions of the form "bot_name:"
     response = response.replace(f"{bot_name}:", "")
 
-    # removes any possible extra spaces at the beginning or end of the message
+    # removes any possible extra spaces
     response = response.strip()
 
-    # if the message has over 2000 characters, it will be cut
-    # and the last 3 characters will be replaced with "..."
-    if len(response) > 2000:
-        response = response[:1997] + "..."
+    # removes all emojis
+    response = "".join(c for c in response if c.isprintable() and not c.isspace())
+
+    # truncates the response if it is too long
+    response = response[:2000]
 
     return response

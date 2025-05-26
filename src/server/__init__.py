@@ -1,6 +1,6 @@
 import server.flask_server as flask_server
 
 
-# uses flask_server.py to create the server
+# Creates the server using the Flask server module.
 def create():
     flask_server.create()

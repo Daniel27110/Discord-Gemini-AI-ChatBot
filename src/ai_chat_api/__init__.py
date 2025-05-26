@@ -14,5 +14,5 @@ def chat(message):
 
 
 # setup ai chat api
-def setup_ai_chat(personality_prompt: str):
+def setup_ai_chat(personality_prompt):
     gemini.setup_ai_chat(personality_prompt)

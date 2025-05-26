@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "*"
-"discord.py" = "*"
 google-generativeai = "*"
-waitress = "*"
 python-dotenv = "*"
+"discord.py" = "*"
+waitress = "*"
+flask = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.13"
